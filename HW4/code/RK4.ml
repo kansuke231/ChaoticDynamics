@@ -1,9 +1,9 @@
 let m =  0.1
-let beta = 0.25
+let beta = 0.0
 let l = 0.1
 let g = 9.8
-let a = 0.01
-let alpha = 6.6
+let a = 0.001
+let alpha = (sqrt (g/.l))*.(3.0/.4.0)
 
 
 let ( *** ) scale vector =
@@ -29,7 +29,7 @@ let f2_pendulum vector t =
 	let omega = List.nth vector 1 in
 	let first = ~-.(beta /. m) *. omega in 
 	let second = ~-.(g /. l) *. (sin theta) in
-	let third = (a/.(m *. l)) *.(cos alpha *. t) in 
+	let third = (a/.(m *. l)) *.(cos (alpha *. t)) in 
 	first +. second +. third
 
 let rec rk4_solver fs x t h n =
