@@ -4,8 +4,15 @@ let a = 16.0
 let r = 45.0
 let b = 4.0
 
+
+(* coefficients for Rossler system 
+let a = 0.398
+let b = 2.0
+let c = 4.0
+*)
+let c = 4.0
 (* for adaptive RK4 *)
-let error = 0.01
+let error = 100.0
 
 
 let ( *** ) scale vector =
@@ -32,7 +39,7 @@ let f_vector fs vector t =
 	(* This imitates f(x,t) *)
 	List.map (fun f -> f vector t) fs
 
-
+(*-----------------------------------------*)
 let f1_lorenz vector t =
 	let x = List.nth vector 0 in
 	let y = List.nth vector 1 in
@@ -49,7 +56,25 @@ let f3_lorenz vector t =
 	let y = List.nth vector 1 in
 	let z = List.nth vector 2 in
 	(x *. y) -. (b*.z)
+(*-----------------------------------------*)
 
+let f1_rossler vector t =
+	let y = List.nth vector 1 in
+	let z = List.nth vector 2 in
+	~-.(y +. z)
+
+let f2_rossler vector t =
+	let x = List.nth vector 0 in
+	let y = List.nth vector 1 in
+	x +. (a *. y)
+
+let f3_rossler vector t =
+	let x = List.nth vector 0 in
+	let z = List.nth vector 2 in
+	b +. (z*.(x -. c))
+
+
+(*-----------------------------------------*)
 
 let rec rk4_solver fs x t h n = 
 	if n = 0 then 
@@ -110,13 +135,13 @@ let rec rk4_adaptive fs x t h n =
 let main () =
 	let t0 = float_of_string Sys.argv.(1) in 
 	let dt = float_of_string Sys.argv.(2) in
-	let n  = int_of_string Sys.argv.(3) in
+	let n = int_of_string Sys.argv.(3) in
 	let x = float_of_string Sys.argv.(4) in
 	let y = float_of_string Sys.argv.(5) in
 	let z = float_of_string Sys.argv.(6) in
 	let x0 = [x; y; z] in
 	Printf.printf "x_%f,%f,%f,%f\n" t0 x y z;
-	rk4_non_adaptive [f1_lorenz; f2_lorenz; f3_lorenz] x0 t0 dt n
+	rk4_adaptive [f1_lorenz; f2_lorenz; f3_lorenz] x0 t0 dt n
 
 let () = main ()
 

@@ -17,15 +17,21 @@ def all_plot(dirpath):
 
 	for f in files:
 		if f.startswith("."):continue
-		data = data_read(dirpath+"/"+f)
-		plt.scatter(*zip(*data),s=1.0)
+		if f == "Q2_b_non.txt":
+			data = data_read(dirpath+"/"+f)
+			#plt.scatter(*zip(*data),color="r",s=1.0)
+			plt.plot(*zip(*data))
+		else:
+			data = data_read(dirpath+"/"+f)
+			#plt.scatter(*zip(*data),color="b",s=1.0)
+			plt.plot(*zip(*data))
 
 	plt.axhline(y=0)
 	plt.axvline(x=0)
-	plt.xlabel("theta")
-	plt.ylabel("omega")
-	#plt.xlim(-4,4)
-	#plt.ylim(-25,25)
+	plt.xlabel("x")
+	plt.ylabel("z")
+	#plt.xlim(-40,40)
+	#plt.ylim(0,80)
 	plt.show()
 
 
