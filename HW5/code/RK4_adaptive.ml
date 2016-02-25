@@ -1,7 +1,7 @@
 
 (* coefficients for Lorenz system *)
 let a = 16.0
-let r = 45.0
+let r = 50.0
 let b = 4.0
 
 
@@ -141,7 +141,7 @@ let main () =
 	let z = float_of_string Sys.argv.(6) in
 	let x0 = [x; y; z] in
 	Printf.printf "x_%f,%f,%f,%f\n" t0 x y z;
-	rk4_adaptive [f1_lorenz; f2_lorenz; f3_lorenz] x0 t0 dt n
+	rk4_non_adaptive [f1_lorenz; f2_lorenz; f3_lorenz] x0 t0 dt n
 
 let () = main ()
 

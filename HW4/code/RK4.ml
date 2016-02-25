@@ -2,7 +2,7 @@ let m =  0.1
 let beta = 0.0
 let l = 0.1
 let g = 9.8
-let a = 0.001
+let a = 1.45
 let alpha = (sqrt (g/.l))*.(3.0/.4.0)
 
 
