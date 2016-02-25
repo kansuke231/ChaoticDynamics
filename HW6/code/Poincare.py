@@ -169,10 +169,10 @@ def main():
     params = sys.argv
     filepath = params[1]
     data = data_read(filepath,t_flag=True)
-    Poincare_map_time(data, t_drive/math.pi)
+    #Poincare_map_time(data, t_drive/math.pi)
     #just_plot(data)
-    #section = Poincare_interpolation(data, t_drive)
-    #just_plot(section)
+    section = Poincare_interpolation(data, t_drive)
+    just_plot(section)
     #spatial_section1 = Poincare_q3b(data)
     #just_plot(spatial_section1)
 
