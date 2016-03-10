@@ -2,6 +2,7 @@ from __future__ import division
 import sys
 import matplotlib.pyplot as plt
 
+interval = 50
 
 
 def data_read(filepath):
@@ -25,10 +26,10 @@ def plot(data):
 
 def q1(data):
 	result = []
-	dt = data[1][1] - data[0][1]
+	dt = data[interval][1] - data[0][1]
 	x_t_1 = data[0][0]
 
-	for d in data[1::50]:
+	for d in data[1::interval]:
 		x_t = d[0]
 		omega = divided_diff(x_t, x_t_1, dt)
 		result.append((x_t,omega))
@@ -53,7 +54,7 @@ def reconstruction(data,tau,m,j,k):
 		for i,e in enumerate(r):
 			if i == j or i == k:
 				temp.append(e)
-		selected.append(tuple(temp[::-1]))
+		selected.append(tuple(temp))
 
 	plt.xlabel("k")
 	plt.ylabel("j")
@@ -65,7 +66,7 @@ def reconstruction(data,tau,m,j,k):
 def main(filepath):
 	data = data_read(filepath)
 	#q1(data)
-	reconstruction(data, 1, 7, 0, 6)
+	reconstruction(data, 500, 15, 0, 1)
 
 if __name__ == '__main__':
 	args = sys.argv
