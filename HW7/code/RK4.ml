@@ -132,7 +132,7 @@ let rec rk4_solver fs state t h n =
 
 let main () =
 	let t0 = 0.0 in 
-	let n  = 100 in
+	let n  = 100000 in
 	let dt = 0.001 in
 	let x = float_of_string Sys.argv.(1) in
 	let y = float_of_string Sys.argv.(2) in

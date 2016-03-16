@@ -1,7 +1,7 @@
 
 (* coefficients for Lorenz system *)
 let a = 16.0
-let r = 50.0
+let r = 19.0
 let b = 4.0
 
 

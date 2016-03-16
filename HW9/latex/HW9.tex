@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[top=20truemm,bottom=20truemm,left=20truemm,right=20truemm]{geometry}
+
+\title{Chaotic Dynamics: Homework 9}
+\author{Kansuke Ikehara (Kansuke.Ikehara@colorado.edu)}
+
+\begin{document}
+\maketitle
+
+\subsection*{Problem 2}
+The resulting $\lambda_{1}$ for each data set is as follows: for data set (a) $\lambda_{1} = 1.53$ and for data set (b) $\lambda_{1} = -0.8$. These results are consistent with what we know of for $\lambda_{1}$ and the system's behavior: If $\lambda_{1}$ is positive, the system is chaotic and if $\lambda_{1}$ is negative, the system's behavior is stable and the trajectory converges to a stable fixed point.
+
+\subsection*{Problem 3}
+For data set (a), we have picked up $\tau = 105$ as it was the first point at which we could see the local minimum in the figure. From Takens theorem we have picked up $m = 7$. The largest lyapunov exponent $\lambda_{1}$ obtained from this experiment was $\lambda_{1} = 0.9$, which is a bit smaller than what we have obtained from using Wolf's algorithm.
+
+\subsection*{Problem 4}
+\subsubsection*{(a)}
+The sequence of $\lambda_{i}$s is as follows: $[1.348, -1.387,  0.07]$.
+The largest lyapunov exponent $\lambda_{1}$ was $1.348$. This should not match the value derived in Problem 3, as variational equation uses Jacobian matrix, which is basically linear approximation of changes of slopes. Thus, the result derived by Kantz's algorithm is more reliable than what we gained in this problem.
+
+\subsubsection*{(b)}
+We calculated the same quantity as (a), but using data sets of different numbers of points. One data set has 1000-point and the other has 100000-point. The sequences of $\lambda_{i}$s are as follows: for 1000-point $[-1.535,  0.027,  0.027]$ and for 100000-point $[14.08,  10.64,  11.65]$. The $\lambda_{1}$ for 1000-point data set is $0.027$ and The $\lambda_{1}$ for 100000-point data set is $14.08$. If the system is linear, these quantities should be the same even if we change the number of iterations. However, since the system is nonlinear, these quantities change as variational equations evolve over time.
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
