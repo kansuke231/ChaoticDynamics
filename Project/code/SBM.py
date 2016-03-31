@@ -61,25 +61,32 @@ def main(filepath):
 
     trajectory = data_read(filepath)
 
-    for point in trajectory[::20]:
+    for point in trajectory[::3]:
         
         x = point[0]
         y = point[1]
         z = point[2]
 
-        c1 = interval_convert(62, -30, x, 1, 0)
-        c2 = interval_convert(86, -42, y, 2, -1)
-        c3 = interval_convert(82, 5, z, 1, 0)
+        #c1 = interval_convert(62, -30, x, 1, 0)
+        #c2 = interval_convert(86, -42, y, 1, 0)
+        #c1 = interval_convert(62, -30, x, 1, 0)
+        #c2 = interval_convert(86, -42, y, 0.5, 0)
+        #c3 = interval_convert(82, 5, z, 0.5, 0)
 
-        a = np.array([[1,1], [1,-1]])
-        b = np.array([c1, c2])
+        c1 = interval_convert(8.5, -3.5, x, 1, 0)
+        c2 = interval_convert(8, -5.5, y, 0.3, 0)
+        c3 = interval_convert(7.5, 0, z, 0.3, 0)
 
-        ans = np.linalg.solve(a, b)
-        p_in, p_out = ans
-        n1 = int(N*c3)
-        print n1
+        #a = np.array([[1,1], [1,-1]])
+        #b = np.array([c1, c2])
+
+        #ans = np.linalg.solve(a, b)
+        p_in, p_out = c2,c3 #ans
+        n1 = int(N*c1)
         n2 = N - n1
-
+        #print "x: %f, c1: %f"%(x,c1)
+        #print "y: %f, c2: %f"%(y,c2)
+        print "n1: %d, n2: %d, p_in: %f, p_out: %f"%(n1,n2,p_in,p_out)
         G = SBM_generator(n1, n2, p_in, p_out)
         graph_draw(G)
 
