@@ -1,15 +1,15 @@
 
 (* coefficients for Lorenz system *)
-let a = 16.0
+(* let a = 16.0
 let r = 45.0
 let b = 4.0
-
-
-(* coefficients for Rossler system 
+ *)
+let r = 45.0
+ (* coefficients for Rossler system  *)
 let a = 0.398
 let b = 2.0
 let c = 4.0
-*)
+
 let c = 4.0
 (* for adaptive RK4 *)
 let error = 100.0
@@ -141,7 +141,7 @@ let main () =
 	let z = float_of_string Sys.argv.(6) in
 	let x0 = [x; y; z] in
 	Printf.printf "x_%f,%f,%f,%f\n" t0 x y z;
-	rk4_non_adaptive [f1_lorenz; f2_lorenz; f3_lorenz] x0 t0 dt n
+	rk4_non_adaptive [f1_rossler; f2_rossler; f3_rossler] x0 t0 dt n
 
 let () = main ()
 
