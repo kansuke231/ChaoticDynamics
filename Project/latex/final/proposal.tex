@@ -8,6 +8,7 @@
 \usepackage{hyperref}
 \usepackage[top=25truemm,bottom=25truemm,left=25truemm,right=25truemm]{geometry}
 
+
 \title{The effect of dynamic change in parameters of a dynamic social network model }
 \author{Kansuke Ikehara (Kansuke.Ikehara@colorado.edu)}
 
@@ -68,16 +69,96 @@ The experiment for extracting a network's state trajectory is carried out for ea
  After this initial configuration, the model proceeds to full steps and uses parameters which are either fixed or changed according to some functions.
  
  In settings of dynamic parameters, I use random function, sine function and R$\ddot{\text{o}}$ssler equation. For sine function and R$\ddot{\text{o}}$ssler equation, one needs to map a value produced by those functions to a value in a desirable range. I use the following mapping equation in order to accomplish it:
- \[
+\begin{equation}
  	newval = \frac{(oldval - oldmin)*y}{x} + newmin
- \]
- where, \textit{oldval} is a value produced by the original function,  \textit{oldmin} is the minimum value the original function produces,  \textit{y} is the absolute value of the desired range,  \textit{x} is the same quantity for original function and \textit{newmin} is the minimum value for the desired value range. Since the vivid change in network structure occurs only when parameters change in the order of magnitude, the desired range is log scale, that is, for example, $r \in \left[ \log10^{-5},\log10^{-1}\right]$ and $newval^* = \exp(r)$. 
+\end{equation}
+ where, \textit{oldval} is a value produced by the original function,  \textit{oldmin} is the minimum value the original function produces,  \textit{y} is the absolute value of the desired range,  \textit{x} is the same quantity for original function and \textit{newmin} is the minimum value for the desired value range. Since the vivid change in network structure occurs only when parameters change in the order of magnitude, the desired range is log scale. That is, for example, $r \in \left[ \log10^{-5},\log10^{-1}\right]$ and $newval^* = \exp(r)$. 
  
  The model runs $3000$ times for each setting, excluding the initial configuration process.
  
- \section{Results}
+\section{Results}
+Fig.\ref{q1}a-d show the state space trajectories for each of the parameter setting: fixed, randomly changing, sinusoidally changing and chaotically changing parameters. 
+
+\subsection{Fixed parameters}
+In fig.\ref{q1_1}, 5 trajectories each with different fixed parameter setting show different behavior in the state space. Followings are the settings:
+\[
+	\texttt{normal\_1}: \texttt{r0 = 0.0005, r1 = 2, gamma = 0.005}
+\]
+\[
+	\texttt{normal\_2}: \texttt{r0 = 0.001, r1 = 2, gamma = 0.001}
+\]
+\[
+	\texttt{normal\_3}: \texttt{r0 = 0.0001, r1 = 2, gamma = 0.01}
+\]
+\[
+	\texttt{normal\_4}: \texttt{r0 = 0.00001, r1 = 5, gamma = 0.01}
+\]
+\[
+	\texttt{normal\_5}: \texttt{r0 = 0.1, r1 = 0.001, gamma = 0.1}
+\]
+
+There are overall 3 behaviors in the trajectories. The first one is evolving down- and leftward and staying there, which can be seen in \texttt{normal\_1} and \texttt{normal\_2}. The second is evolving down- and a bit rightward and converging to points in the area, as seen in \texttt{normal\_3} and \texttt{normal\_4}. The last one is quickly moving down- and leftward and reaching a fixed point (in \texttt{normal\_5}). All of these behaviors have an interpretation in terms of network structure and it is explained in the next section.
+
+\subsection{Randomly changing parameters}
+First, a random value for a parameter is generated in $\log$ scale, e.g. $r \in \left[ \log(10^{-2}), \log(10^1)\right] = \left[-4.6, 2.3\right]$, then $r$ is used for a power of an exponential $\exp(r)$, which becomes the parameter of the model. Changing parameters randomly yields distinct trajectories from the ones with fixed parameters. In fig.\ref{q1_2}, the trajectory starts around the initial configuration and moves down- and leftward. It then randomly walks around the region. 
+
+\subsection{Sinusoidally changing parameters}
+Fig.\ref{q1_3} shows the trajectories for parameters which change according to sine functions. The trajectory \texttt{sin\_1} has parameters all having  the same phase for sine functions. \texttt{sin\_2\_phase\_shift}, however, has sine functions for parameters, each of which is phase-shifted by $\frac{\pi}{2}$ to others. The effect of phase-shifting is quite obvious: the location of a periodic orbit is moved up- and rightward and the orbit is made fatter.
+
+\subsection{Chaotically changing parameters}
+In this setting, I change parameters according to R$\ddot{\text{o}}$ssler equation, whose $x,y,z$ coordinates are mapped to $r_{0},r_{1},\gamma$.
+For this setting, I have run the model 20 times and average trajectories in order to filter out the noise. 
+
+\begin{figure}[h]
+\centering
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=2in]{figs/normal.png}
+  \caption{normal}
+  \label{q1_1}
+\end{subfigure}%
+\hfill
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=2in]{figs/random.png}
+  \caption{random}
+  \label{q1_2}
+\end{subfigure}%
+\hfill
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=2in]{figs/sin.png}
+  \caption{sine}
+  \label{q1_3}
+\end{subfigure}%
+\hfill
+\begin{subfigure}{.5\textwidth}
+  \centering
+  \includegraphics[height=2in]{figs/chaotic.png}
+  \caption{chaotic}
+  \label{q1_4}
+\end{subfigure}
+\caption{State-space trajectories}
+\label{q1}
+\end{figure}
  
+ \section{Discussion}
+ Fig.\ref{q2} shows how one should interpret the state in terms of network structure. The region in the bottom left corresponds to Random Network (\textit{RN}) \cite{RandomNetwork}. It is widely known that random networks have very low clustering coefficient and average path lengths. Most of the trajectories we have seen asymptotically move toward this region. On the right side of Random Network region, we see highly clustered small networks, which are usually called \textit{small-world network} (\textit{SWN}) \cite{j1998collective}. Trajectories \texttt{normal\_3} and \texttt{normal\_4} converges to be in this region. Above this region is Highly Clustered Wide Network region (\textit{HCWN}), where a network contains the number of triangles/community but the edge density between them is much sparser than those of other two network regions. 
  
+ In the diagram, the evolution of trajectories correspond to shifts in the structural phase. For example, fixed parameters force networks to be converge to one of the three network type from being highly clustered and wide network. Randomly changing parameters make networks to evolve into one between Random Network and Small-World network regions and let them change randomly around the region. Sinusoidally changing them forces the network structure to be changing among \textit{RN}, \textit{SWN} and \textit{HCWN}. Chaotically changing parameters produces a similar result as one in sine function settings.
+  
+  The most notable point in the result is that shifting phases by $\frac{\pi}{2}$ in sine functions changes the location of a periodic orbit. This could be due to the fact that each time the most influential parameter is different. 
+     
+ \begin{figure}[h]
+  \centering
+  \includegraphics[width=3in]{figs/diagram.png}
+  \caption{Structural interpretation for each region in the state space}
+  \label{q2}
+\end{figure}
+
+\section{Conclusion}
+In this study I investigate the effects of changing parameters of a model dynamically. Most of the cases, our simple intuition that networks evolve in the same way as parameters do seems to work: direct convergence to fixed points for fixed parameters, moving randomly around fixed points for randomly changing parameters, forming some sort of periodic orbits for sinusoidal parameters and chaotic parameters. However, introducing phase-shifting in sine functions yields the change in the location of a periodic orbit and its geometrical shape. This study sheds light on a new perspective in studying dynamical networks with a simple state-space approach with network statistics.
+
 \bibliographystyle{ieeetr}
 \bibliography{reference} 
 \end{document}
